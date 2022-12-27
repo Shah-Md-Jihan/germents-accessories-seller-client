@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import Logo from "../assets/images/logo/logo.png";
-import { FaEnvelope, FaHeart, FaKey, FaPhoneVolume, FaSearch, FaShoppingCart, FaUserAlt } from "react-icons/fa";
+import { FaAngleDown, FaEnvelope, FaHeart, FaKey, FaPhoneVolume, FaShoppingCart, FaUserAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthProvider";
+import { toast } from "react-hot-toast";
 
 const NavbarTop = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        toast.success("Logout Successful!");
+      })
+      .catch((error) => console.error(error));
+  };
   return (
     <>
       <p className="flex items-center justify-center pt-5 lg:hidden">
@@ -12,7 +22,7 @@ const NavbarTop = () => {
         <FaEnvelope />
         <span className="ml-2">gtaseller@gmail.com</span>
       </p>
-      <div className="grid lg:grid-cols-2 grid-cols-1 lg:px-12 py-8">
+      <div className="grid lg:grid-cols-2 grid-cols-1 lg:px-12 py-1">
         <div className="flex items-center">
           <div className="w-1/4">
             <img src={Logo} className="" alt="logo" />
@@ -40,14 +50,28 @@ const NavbarTop = () => {
             <FaShoppingCart className="mr-2" />
             My Cart
           </p>
-          {/* <p className="flex lg:mr-20 items-center">
-            <FaUserAlt className="mr-2" />
-            User Name
-          </p> */}
-          <p className="flex lg:mr-20 items-center">
-            <FaKey className="mr-2" />
-            <Link to={"/login"}>Signup / Login</Link>
-          </p>
+          {user?.uid ? (
+            <p className="flex lg:mr-20 items-center">
+              <FaUserAlt className="mr-2" />
+
+              <div className="dropdown">
+                <label tabIndex={0} className="flex items-center hover:text-red-600" style={{ cursor: "pointer" }}>
+                  {user?.displayName}
+                  <FaAngleDown />
+                </label>
+                <ul tabIndex={0} className="dropdown-content menu shadow bg-orange-600/75 text-white rounded w-28">
+                  <li>
+                    <span onClick={handleLogout}>Logout</span>
+                  </li>
+                </ul>
+              </div>
+            </p>
+          ) : (
+            <p className="flex lg:mr-20 items-center">
+              <FaKey className="mr-2" />
+              <Link to={"/login"}>Signup / Login</Link>
+            </p>
+          )}
         </div>
       </div>
     </>
