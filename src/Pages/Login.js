@@ -36,13 +36,13 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    // googleLogin(googleProvider)
-    //   .then((user) => {
-    //     handleLoginAlert();
-    //     navigate(from, { replace: true });
-    //     setLoginError("");
-    //   })
-    //   .catch((error) => console.log(error));
+    googleLogin(googleProvider)
+      .then((user) => {
+        navigate(from, { replace: true });
+        setLoginError("");
+        toast.success("Login Successful!");
+      })
+      .catch((error) => console.log(error));
   };
   return (
     <div className="flex justify-center items-center mt-10">
