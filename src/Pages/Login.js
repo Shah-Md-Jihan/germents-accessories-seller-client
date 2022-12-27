@@ -14,7 +14,7 @@ const Login = () => {
           <input type="password" placeholder="Password" className="input input-bordered w-full" />
           <p>
             New to our site? Please
-            <Link to={"/"}>
+            <Link to={"/signup"}>
               <span className="font-bold text-red-600 hover:text-green-500 ml-1">Signup</span>
             </Link>
           </p>
