@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { FaEnvelope, FaPhoneVolume } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
+import Dashboard from "./../Pages/Dashboard/Dashboard";
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);
@@ -25,6 +26,11 @@ const Navbar = () => {
       <li>
         <a>Contact Us</a>
       </li>
+      {user?.uid && (
+        <li>
+          <Link to={"/dashboard"}>Dashboard</Link>
+        </li>
+      )}
     </React.Fragment>
   );
   return (

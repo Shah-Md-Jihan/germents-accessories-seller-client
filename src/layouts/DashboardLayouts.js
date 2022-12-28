@@ -25,6 +25,9 @@ const DashboardLayouts = () => {
             <li>
               <Link to={"/dashboard/add/category"}>Add Category</Link>
             </li>
+            <li>
+              <Link to={"/dashboard/all/categories"}>All Categories</Link>
+            </li>
           </ul>
         </div>
       </div>

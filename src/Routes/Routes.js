@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayouts from "../layouts/DashboardLayouts";
 import Main from "../layouts/Main";
 import AddCategory from "../Pages/Dashboard/AddCategory";
+import AllCategories from "../Pages/Dashboard/AllCategories";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/add/category",
         element: <AddCategory></AddCategory>,
+      },
+      {
+        path: "/dashboard/all/categories",
+        element: <AllCategories></AllCategories>,
       },
     ],
   },

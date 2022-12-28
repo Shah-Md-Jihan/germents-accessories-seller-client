@@ -4,18 +4,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
 const AddCategory = () => {
-  const [students, setStudents] = useState([]);
-  useEffect(() => {
-    async function getAllStudents() {
-      try {
-        const studentsAll = await axios.get("http://127.0.0.1:8000/api/student");
-        console.log(studentsAll.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getAllStudents();
-  }, []);
   const {
     register,
     formState: { errors },

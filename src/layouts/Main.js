@@ -1,9 +1,14 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "../shared/Footer";
 import Header from "../shared/Header";
 
 const Main = () => {
+  const { isLoading, data: categories } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => fetch("http://127.0.0.1:8000/api/categories").then((res) => res.json()),
+  });
   return (
     <div>
       <Header></Header>
@@ -18,12 +23,11 @@ const Main = () => {
           <label htmlFor="side_bar" className="drawer-overlay"></label>
           <ul className="menu p-4 w-64 bg-blue-100 text-base-content">
             <h1>Categories</h1>
-            <li>
-              <a>Sidebar Item 1</a>
-            </li>
-            <li>
-              <a>Sidebar Item 2</a>
-            </li>
+            {categories?.map((category) => (
+              <li key={category?.id}>
+                <a>{category?.category_name}</a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
