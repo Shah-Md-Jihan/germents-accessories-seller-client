@@ -1,22 +1,49 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
 const AddCategory = () => {
+  const [students, setStudents] = useState([]);
+  useEffect(() => {
+    async function getAllStudents() {
+      try {
+        const studentsAll = await axios.get("http://127.0.0.1:8000/api/student");
+        console.log(studentsAll.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getAllStudents();
+  }, []);
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm();
-  const handleLogin = (data) => {
-    console.log(data.category_name);
+  const handleAddCategory = async (data) => {
+    let result = await fetch("http://127.0.0.1:8000/api/add/category", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    result = await result.json();
+
+    if (result.status === true) {
+      reset();
+      toast.success(result.message);
+    }
   };
   return (
     <div>
-      <div className="flex justify-center items-center mt-10">
+      <div className="flex justify-center mt-10">
         <div className="w-[385px] bg-blue-100 p-6">
           <h1 className="text-xl font-semibold text-center">Add Category</h1>
 
-          <form onSubmit={handleSubmit(handleLogin)}>
+          <form onSubmit={handleSubmit(handleAddCategory)}>
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text">Category Name</span>
