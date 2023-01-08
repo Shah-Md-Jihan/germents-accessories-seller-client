@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 
 const Signup = () => {
   const { createUser, updateUser } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
   const {
     register,
     formState: { errors },
@@ -21,6 +24,7 @@ const Signup = () => {
           .then(() => {
             // handleSingUpAlert();
             // saveUserInDB(info.name, info.email);
+            navigate(from, { replace: true });
           })
           .catch((error) => console.error(error));
       })
@@ -68,7 +72,10 @@ const Signup = () => {
               {...register("password", {
                 required: "Password field is required",
                 minLength: { value: 6, message: "Password must be 6 character or longer!" },
-                pattern: { value: /(?=.*[a-z])(?=.*[A-Z])(?=.*[!#$%&?"])(?=.*[0-9])/, message: "Password must be strong!" },
+                pattern: {
+                  value: /(?=.*[a-z])(?=.*[A-Z])(?=.*[!#$%&?"])(?=.*[0-9])/,
+                  message: "Password must have a capital letter, small letter,number and a special character!",
+                },
               })}
               className="input input-bordered w-full"
             />
